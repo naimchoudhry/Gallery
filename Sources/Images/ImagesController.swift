@@ -86,7 +86,7 @@ class ImagesController: UIViewController {
   }
 
   @objc func stackViewTouched(_ stackView: StackView) {
-    EventHub.shared.stackViewTouched?()
+    EventHub.shared.stackViewTouched?(stackView)
   }
 
   // MARK: - Logic
@@ -112,6 +112,9 @@ class ImagesController: UIViewController {
     let hasImages = !cart.images.isEmpty
     gridView.bottomView.g_fade(visible: hasImages)
     gridView.collectionView.g_updateBottomInset(hasImages ? gridView.bottomView.frame.size.height : 0)
+    if hasImages {
+        gridView.doneButton.setTitle(cart.images.count == 1 ? "Add Photo" : "Add Photos", for: .normal)
+    }
   }
 
   // MARK: - Controls

@@ -100,7 +100,7 @@ class CameraController: UIViewController {
   }
 
   @objc func stackViewTouched(_ stackView: StackView) {
-    EventHub.shared.stackViewTouched?()
+    EventHub.shared.stackViewTouched?(stackView)
   }
 
   @objc func shutterButtonTouched(_ button: ShutterButton) {
@@ -144,6 +144,9 @@ class CameraController: UIViewController {
   func refreshView() {
     let hasImages = !cart.images.isEmpty
     cameraView.bottomView.g_fade(visible: hasImages)
+    if hasImages {
+        cameraView.doneButton.setTitle(cart.images.count == 1 ? "Add Photo" : "Add Photos", for: .normal)
+    }
   }
 
   // MARK: - Controls

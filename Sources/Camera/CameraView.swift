@@ -77,7 +77,7 @@ class CameraView: UIView, UIGestureRecognizerDelegate {
     rotateButton.g_pin(size: CGSize(width: 44, height: 44))
 
     bottomContainer.g_pinDownward()
-    bottomContainer.g_pin(height: 80)
+    bottomContainer.g_pin(height: 70)
     bottomView.g_pinEdges()
 
     stackView.g_pin(on: .centerY, constant: -4)
@@ -212,7 +212,7 @@ class CameraView: UIView, UIGestureRecognizerDelegate {
     button.setTitleColor(UIColor.white, for: UIControlState())
     button.setTitleColor(UIColor.lightGray, for: .disabled)
     button.titleLabel?.font = Config.Font.Text.regular.withSize(16)
-    button.setTitle("Gallery.Done".g_localize(fallback: "Done"), for: UIControlState())
+    button.setTitle("Gallery.Done".g_localize(fallback: "Add Photo(s)"), for: UIControlState())
 
     return button
   }

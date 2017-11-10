@@ -3,6 +3,7 @@ import Foundation
 class EventHub {
 
   typealias Action = () -> Void
+    typealias ViewAction = (UIView) -> Void
 
   static let shared = EventHub()
 
@@ -13,5 +14,5 @@ class EventHub {
   var close: Action?
   var doneWithImages: Action?
   var doneWithVideos: Action?
-  var stackViewTouched: Action?
+  var stackViewTouched: ViewAction?
 }

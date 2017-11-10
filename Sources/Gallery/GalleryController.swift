@@ -5,7 +5,7 @@ public protocol GalleryControllerDelegate: class {
 
   func galleryController(_ controller: GalleryController, didSelectImages images: [Image])
   func galleryController(_ controller: GalleryController, didSelectVideo video: Video)
-  func galleryController(_ controller: GalleryController, requestLightbox images: [Image])
+    func galleryController(_ controller: GalleryController, requestLightbox images: [Image], inView: UIView)
   func galleryControllerDidCancel(_ controller: GalleryController)
 }
 
@@ -126,9 +126,9 @@ public class GalleryController: UIViewController, PermissionControllerDelegate {
       }
     }
 
-    EventHub.shared.stackViewTouched = { [weak self] in
+    EventHub.shared.stackViewTouched = { [weak self] view in
       if let strongSelf = self {
-        strongSelf.delegate?.galleryController(strongSelf, requestLightbox: strongSelf.cart.images)
+        strongSelf.delegate?.galleryController(strongSelf, requestLightbox: strongSelf.cart.images, inView: view)
       }
     }
   }

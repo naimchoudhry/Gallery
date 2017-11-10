@@ -44,9 +44,9 @@ class GridView: UIView {
     }
 
     topView.g_pinUpward()
-    topView.g_pin(height: 40)
+    topView.g_pin(height: 44)
     bottomView.g_pinDownward()
-    bottomView.g_pin(height: 80)
+    bottomView.g_pin(height: 70)
 
     emptyView.g_pinEdges(view: collectionView)
     
@@ -57,10 +57,10 @@ class GridView: UIView {
 
     closeButton.g_pin(on: .top)
     closeButton.g_pin(on: .left)
-    closeButton.g_pin(size: CGSize(width: 40, height: 40))
+    closeButton.g_pin(size: CGSize(width: 44, height: 44))
 
     arrowButton.g_pinCenter()
-    arrowButton.g_pin(height: 40)
+    arrowButton.g_pin(height: 44)
 
     doneButton.g_pin(on: .centerY)
     doneButton.g_pin(on: .right, constant: -38)
@@ -77,7 +77,7 @@ class GridView: UIView {
 
   func makeBottomView() -> UIView {
     let view = UIView()
-
+    view.backgroundColor = .clear
     return view
   }
 
@@ -113,7 +113,7 @@ class GridView: UIView {
     button.setTitleColor(UIColor.white, for: UIControlState())
     button.setTitleColor(UIColor.lightGray, for: .disabled)
     button.titleLabel?.font = Config.Font.Text.regular.withSize(16)
-    button.setTitle("Gallery.Done".g_localize(fallback: "Done"), for: UIControlState())
+    button.setTitle("Gallery.Done".g_localize(fallback: "Add Photo(s)"), for: UIControlState())
     
     return button
   }
