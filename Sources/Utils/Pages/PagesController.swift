@@ -11,6 +11,7 @@ class PagesController: UIViewController {
   lazy var scrollView: UIScrollView = self.makeScrollView()
   lazy var scrollViewContentView: UIView = UIView()
   lazy var pageIndicator: PageIndicator = self.makePageIndicator()
+    var pageIndicatorHeightConstraint: NSLayoutConstraint?
 
   var selectedIndex: Int = 0
   let once = Once()
@@ -40,6 +41,14 @@ class PagesController: UIViewController {
 
     guard scrollView.frame.size.width > 0 else {
       return
+    }
+    
+    if let pageIndicatorHeightConstraint = pageIndicatorHeightConstraint {
+        if #available(iOS 11, *) {
+            pageIndicatorHeightConstraint.constant = 44 + view.safeAreaInsets.bottom
+        } else {
+            pageIndicatorHeightConstraint.constant = 44 + view.layoutMargins.bottom
+        }
     }
 
     once.run {
@@ -93,7 +102,10 @@ class PagesController: UIViewController {
     scrollView.addSubview(scrollViewContentView)
 
     pageIndicator.g_pinDownward()
-    pageIndicator.g_pin(height: 44)
+    //pageIndicator.g_pin(height: 44)
+    
+    pageIndicatorHeightConstraint = NSLayoutConstraint(item: pageIndicator, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 44)
+    pageIndicator.addConstraint(pageIndicatorHeightConstraint!)
 
     scrollView.g_pinUpward()
     if usePageIndicator {

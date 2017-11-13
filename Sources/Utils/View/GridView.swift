@@ -13,14 +13,31 @@ class GridView: UIView {
   lazy var closeButton: UIButton = self.makeCloseButton()
   lazy var doneButton: UIButton = self.makeDoneButton()
   lazy var emptyView: UIView = self.makeEmptyView()
+    
+    var topViewHeightConstraint: NSLayoutConstraint?
 
   // MARK: - Initialization
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-
     setup()
   }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        var heightAdjust: CGFloat = 0
+        if #available(iOS 11, *) {
+            heightAdjust = safeAreaInsets.top
+        } else {
+            heightAdjust = layoutMargins.top
+        }
+        if heightAdjust > 10 {
+            heightAdjust -= 10
+        }
+        print("heighADJUST = \(heightAdjust)")
+        topViewHeightConstraint?.constant = 44 + heightAdjust
+    }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -42,9 +59,19 @@ class GridView: UIView {
     [bottomBlurView, doneButton].forEach {
       bottomView.addSubview($0 as! UIView)
     }
+    var heightAdjust: CGFloat = 0
+    if #available(iOS 11, *) {
+        heightAdjust = safeAreaInsets.top
+    } else {
+        heightAdjust = layoutMargins.top
+    }
 
     topView.g_pinUpward()
-    topView.g_pin(height: 44)
+    //topViewHeightConstraint = topView.g_pin(height: 44 + heightAdjust)
+    
+    topViewHeightConstraint = NSLayoutConstraint(item: topView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 44 + heightAdjust)
+    topView.addConstraint(topViewHeightConstraint!)
+    
     bottomView.g_pinDownward()
     bottomView.g_pin(height: 70)
 
@@ -55,11 +82,12 @@ class GridView: UIView {
 
     bottomBlurView.g_pinEdges()
 
-    closeButton.g_pin(on: .top)
+    closeButton.g_pin(on: .bottom)
     closeButton.g_pin(on: .left)
     closeButton.g_pin(size: CGSize(width: 44, height: 44))
 
-    arrowButton.g_pinCenter()
+    arrowButton.g_pin(on: .centerX)
+    arrowButton.g_pin(on: .bottom)
     arrowButton.g_pin(height: 44)
 
     doneButton.g_pin(on: .centerY)
@@ -122,7 +150,6 @@ class GridView: UIView {
     let layout = UICollectionViewFlowLayout()
     layout.minimumInteritemSpacing = 2
     layout.minimumLineSpacing = 2
-
     let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
     view.backgroundColor = UIColor.white
 

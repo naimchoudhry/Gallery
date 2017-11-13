@@ -64,7 +64,8 @@ class CameraView: UIView, UIGestureRecognizerDelegate {
     insertSubview(focusImageView, belowSubview: bottomContainer)
     insertSubview(shutterOverlayView, belowSubview: bottomContainer)
 
-    closeButton.g_pin(on: .top)
+    
+    closeButton.g_pin(on: .topMargin)
     closeButton.g_pin(on: .left)
     closeButton.g_pin(size: CGSize(width: 44, height: 44))
 
@@ -72,7 +73,7 @@ class CameraView: UIView, UIGestureRecognizerDelegate {
     flashButton.g_pin(on: .centerX)
     flashButton.g_pin(size: CGSize(width: 60, height: 44))
 
-    rotateButton.g_pin(on: .top)
+    rotateButton.g_pin(on: .centerY, view: closeButton)
     rotateButton.g_pin(on: .right)
     rotateButton.g_pin(size: CGSize(width: 44, height: 44))
 

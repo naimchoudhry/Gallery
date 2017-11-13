@@ -81,6 +81,10 @@ class DropdownController: UIViewController {
 
     tableView.dataSource = self
     tableView.delegate = self
+    
+    if #available(iOS 11, *) {
+        tableView.contentInsetAdjustmentBehavior = .never
+    }
 
     return tableView
   }
