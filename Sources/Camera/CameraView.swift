@@ -77,6 +77,18 @@ class CameraView: UIView, UIGestureRecognizerDelegate {
     rotateButton.g_pin(on: .right)
     rotateButton.g_pin(size: CGSize(width: 44, height: 44))
 
+    if #available(iOS 11, *) {
+      Constraint.on(
+        closeButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+        rotateButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor)
+      )
+    } else {
+      Constraint.on(
+        closeButton.topAnchor.constraint(equalTo: topAnchor),
+        rotateButton.topAnchor.constraint(equalTo: topAnchor)
+      )
+    }
+
     bottomContainer.g_pinDownward()
     bottomContainer.g_pin(height: 70)
     bottomView.g_pinEdges()
